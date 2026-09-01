@@ -8,9 +8,27 @@
   <em>Taiwanese streetscape → machine perception → latent spatial transformation → reconstructed point-cloud field</em>
 </p>
 
-Taiwan.zip is an architectural research workflow that transforms Taiwanese streetscape photographs into relative depth, multi-label semantic fields, pseudo-3D point clouds, and learned spatial latent states.
+## Project
 
-The project does not ask AI to directly generate architecture as a finished image. Machine perception, abstraction, misreading, spatial reconstruction, and latent recombination become design operations.
+**Taiwan.zip** is an architectural research workflow that transforms Taiwanese streetscape photographs into relative depth, multi-label semantic fields, pseudo-3D point clouds, and learned spatial latent states.
+
+The project does not ask AI to directly generate architecture as a finished image. Instead, machine perception, abstraction, misreading, spatial reconstruction, and latent recombination become design operations.
+
+This repository documents the final workflow developed for **Playing Models 2026**.
+
+## Authors
+
+**Hsuan-Yao Huang**  
+**Chih-Ling Tsou**
+
+Institute of Architecture,  
+National Yang Ming Chiao Tung University
+
+## Concept
+
+Human perception of architecture is shaped by accumulated habits, cultural conventions, and familiar categories. Taiwan.zip asks what architecture might become when a computational model is allowed to read and reconstruct a streetscape through its own learned relationships.
+
+The workflow treats AI as an **interpretive spatial model** rather than as a direct architectural image generator.
 
 ## Visual workflow
 
@@ -22,13 +40,26 @@ The project does not ask AI to directly generate architecture as a finished imag
 Observed Taiwanese street
 → estimated relative depth
 → multi-label semantic decomposition
-→ depth-lifted spatial field
+→ 7-channel spatial field
 → Spatial VAE V2
 → latent transformation
+→ generated depth + semantic field
 → point cloud / Rhino–Grasshopper workflow
 ```
 
 The input remains pixel-aligned through depth and semantic processing. Point clouds are derived spatial representations rather than the primary training format.
+
+The seven aligned channels are:
+
+```text
+depth_norm
+facade
+window
+signboard
+vegetation
+person
+vehicle
+```
 
 ## Playing the latent model
 
@@ -36,15 +67,16 @@ The input remains pixel-aligned through depth and semantic processing. Point clo
   <img src="media/diagrams/diagram_02_latent_operations.png" alt="Interpolation, extrapolation and local perturbation in Taiwan.zip" width="100%">
 </p>
 
-The learned spatial field can be navigated through three related operations:
+The learned spatial field can be navigated through several related operations:
 
 | Operation | Spatial reading |
 |---|---|
 | **Interpolation** | Moves between two learned streetscape states |
 | **Extrapolation** | Extends a learned direction beyond its source pair |
 | **Local perturbation** | Mutates one latent region while retaining surrounding context |
+| **Recombination** | Reorganizes learned relationships across latent states |
 
-These are latent-space operations. They are not RGB cross-fades between photographs.
+These are latent-space operations. They are not RGB cross-fades between photographs and are not direct point-cloud morphs.
 
 ## Semantic spatial representation
 
@@ -63,12 +95,12 @@ The six semantic layers remain independent because Taiwanese streetscape element
 
 | Channel | Meaning in the spatial representation |
 |---|---|
-| Facade | envelope, mass, boundary, continuous frontage |
-| Window | opening, repetition, perforation, facade rhythm |
-| Signboard | attached frontal marker and commercial layer |
-| Vegetation | organic interruption, clusters, soft boundaries |
-| Person | temporary occupation and human scale |
-| Vehicle | mobile ground occupation and street-level density |
+| **Facade** | envelope, mass, boundary, continuous frontage |
+| **Window** | opening, repetition, perforation, facade rhythm |
+| **Signboard** | attached frontal marker and commercial layer |
+| **Vegetation** | organic interruption, clusters, soft boundaries |
+| **Person** | temporary occupation and human scale |
+| **Vehicle** | mobile ground occupation and street-level density |
 
 ## Sixteen-state latent journey
 
@@ -76,7 +108,37 @@ The six semantic layers remain independent because Taiwanese streetscape element
   <img src="media/final_16state_grid.png" alt="Taiwan.zip sixteen-state latent transformation grid" width="100%">
 </p>
 
-The state sequence records a continuous spatial journey rather than sixteen disconnected image effects. Model-derived depth and semantic fields are decoded into point-cloud configurations using a consistent camera and semantic color system.
+The sixteen-state sequence records a continuous spatial journey rather than sixteen disconnected image effects.
+
+Each generated state is produced by:
+
+```text
+learned latent state
+→ latent transformation
+→ Spatial VAE V2 decoder
+→ relative depth + semantic probability fields
+→ pseudo-3D semantic point cloud
+```
+
+The final presentation uses a consistent semantic color system and a shared camera logic so that the states can be compared as one evolving spatial family.
+
+## Final presentation sequence
+
+The final film is structured as:
+
+```text
+Original RGB
+→ Relative Depth
+→ Local img2pointclouds Point Cloud
+→ Latent Threshold
+→ 16 Model-Derived States
+→ Final Hybrid Field
+→ 4 × 4 State Overview
+```
+
+The opening local point cloud is an observational and transitional artifact generated from the real source image. It is **not** used to generate the sixteen final states.
+
+All sixteen main states are encoded from regression samples, transformed in the trained spatial latent field, and decoded through the **Spatial VAE V2 checkpoint**.
 
 ## Repository structure
 
@@ -106,7 +168,7 @@ The commands below assume the current directory is the repository root. The comp
 Python 3.10–3.12 is recommended. A CUDA-capable PyTorch installation is strongly recommended for depth inference, semantic parsing, training, and final rendering.
 
 ```bash
-git clone <your-repository-url> Taiwan.zip
+git clone https://github.com/23U544/Taiwan.zip.git
 cd Taiwan.zip
 python -m venv .venv
 ```
@@ -127,7 +189,7 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Install [FFmpeg](https://ffmpeg.org/) separately and confirm that this succeeds:
+Install [FFmpeg](https://ffmpeg.org/) separately and confirm:
 
 ```bash
 ffmpeg -version
@@ -163,7 +225,7 @@ The final training representation has seven aligned channels at 256 × 256:
 depth_norm + facade + window + signboard + vegetation + person + vehicle
 ```
 
-If you already have the Spatial V2 bundle and checkpoint, skip directly to step 6 or 7.
+If you already have the Spatial V2 bundle and checkpoint, skip directly to the training or rendering stages.
 
 ### 3. Build a canonical scene corpus from images
 
@@ -176,7 +238,7 @@ python scripts/corpus/corpus_ingest.py path/to/source_images \
   --source-dataset your_source_name
 ```
 
-Before a long run, inspect the inventory and depth queue:
+Inspect the inventory and depth queue:
 
 ```bash
 python scripts/depth/corpus_depth.py \
@@ -195,11 +257,18 @@ python scripts/depth/corpus_depth.py \
   --checkpoint scripts/depth/checkpoints/depth_anything_v2_vitb.pth
 ```
 
-The worker skips complete scenes unless `--force` is supplied. Depth values are relative: `0 = farther`, `1 = nearer`.
+Depth values are relative:
+
+```text
+0 = farther
+1 = nearer
+```
+
+They are not metric distances.
 
 ### 4. Run the frozen semantic parser
 
-First inspect the parsing queue:
+Inspect the parsing queue:
 
 ```bash
 python scripts/corpus/corpus_pipeline.py \
@@ -208,7 +277,7 @@ python scripts/corpus/corpus_pipeline.py \
   --inventory-only
 ```
 
-Then run the resumable parser pipeline:
+Run the resumable parser pipeline:
 
 ```bash
 python scripts/corpus/corpus_pipeline.py \
@@ -216,7 +285,7 @@ python scripts/corpus/corpus_pipeline.py \
   --parser scripts/parsing/street_parser_v1.py
 ```
 
-The parser uses local Hugging Face model caches and writes independent multi-label masks under each scene's `parsing_v1/` directory. GPU memory is managed model-by-model; avoid running another large GPU process simultaneously.
+The parser writes independent multi-label masks under each scene's `parsing_v1/` directory.
 
 ### 5. Build the Spatial V2 training bundle
 
@@ -239,11 +308,18 @@ Expected bundle:
 phase_2b_spatial_v2/taiwan_zip_spatial_v2_bundle.zip
 ```
 
-It contains `train.npz`, `val.npz`, `test.npz`, `regression.npz`, the manifest, and the dataset summary.
+It contains:
+
+```text
+train.npz
+val.npz
+test.npz
+regression.npz
+manifest
+dataset_summary.json
+```
 
 ### 6. Train Spatial VAE V2
-
-Local or Colab example:
 
 ```bash
 python scripts/training/taiwan_zip_spatial_vae_v2.py \
@@ -264,11 +340,9 @@ The trainer uses early stopping and copies the best checkpoint to:
 results_spatial_v2/taiwan_zip_spatial_v2_best.pt
 ```
 
-It also exports reconstruction, interpolation, extrapolation, and local-perturbation diagnostics. Reduce `--batch-size` if GPU memory is insufficient.
+It also exports reconstruction, interpolation, extrapolation, and local-perturbation diagnostics.
 
 ### 7. Render a compact latent morph
-
-Interpolation through and beyond two regression anchors:
 
 ```bash
 python scripts/render/render_taiwan_zip_morph.py \
@@ -284,11 +358,13 @@ python scripts/render/render_taiwan_zip_morph.py \
   --fps 30
 ```
 
-For a local mutation, use `--mode local_perturbation` with `--sigma-end` and `--mutation-radius`. The renderer writes an MP4 plus a same-name JSON metadata file.
+For a local mutation, use `--mode local_perturbation` with the mutation parameters supported by the script.
 
-### 8. Prepare the real-street opening for the final journey
+Every morph frame is decoded from the trained latent field; this is not a direct point-cloud coordinate cross-fade.
 
-The V6.3 final renderer expects one presentation-ready local source bundle containing:
+### 8. Prepare the real-street opening
+
+The final renderer expects:
 
 ```text
 local_intro/
@@ -297,7 +373,7 @@ local_intro/
 └─ street46_depth_official.png
 ```
 
-Choose one real source image, copy it twice as `local_intro/rgb.jpg` and `local_intro/street46.jpg`, then run:
+Create the local pseudo-3D point cloud with:
 
 ```bash
 python scripts/depth/img2pointclouds.py \
@@ -307,7 +383,7 @@ python scripts/depth/img2pointclouds.py \
   --stride 4
 ```
 
-This creates `street46.ply` and `street46_depth_official.png`. The second image copy can then be removed; `rgb.jpg` remains the human-view opening frame.
+The local point cloud is used only for the opening and visual bridge.
 
 ### 9. Render the final 16-state journey
 
@@ -336,11 +412,39 @@ outputs/taiwan_zip_final/
 └─ stills/
 ```
 
-All 16 main states are encoded from regression samples, transformed in spatial latent space, and decoded through the trained checkpoint.
+### 10. Append the final 4 × 4 state overview
 
-### 10. Export a generated state to PLY / Rhino
+The CPU-friendly finalization script can decode the sixteen model states once, render a shared-camera 4 × 4 overview, and append it to an already rendered V6.3 movie without recalculating the full 50-second latent morph.
 
-The trainer's generated folders contain paired depth and semantic files. Export one pair with:
+```bash
+python scripts/render/render_taiwan_zip_v6_4_grid_cpu_patch.py \
+  --checkpoint results_spatial_v2/taiwan_zip_spatial_v2_best.pt \
+  --data-zip phase_2b_spatial_v2/taiwan_zip_spatial_v2_bundle.zip \
+  --dataset-dir local_intro \
+  --output-dir outputs/taiwan_zip_final_grid \
+  --fps 20 \
+  --num-states 16 \
+  --anchor-indices 0,6,12,18,24,31 \
+  --point-stride 4 \
+  --point-size 2.4 \
+  --depth-strength 430 \
+  --semantic-min-prob 0.16 \
+  --perturb-strength 0.85 \
+  --perturb-radius 0.27 \
+  --grid-hold-seconds 3.0 \
+  --grid-only \
+  --existing-video outputs/taiwan_zip_final/taiwan_zip_v6_3_MODEL_FINAL.mp4
+```
+
+Important outputs:
+
+```text
+final_16state_grid.png
+final_16state_grid_video.png
+taiwan_zip_v6_4_GRID_APPENDED.mp4
+```
+
+### 11. Export a generated state to PLY / Rhino
 
 ```bash
 python scripts/export/taiwan_zip_generated_to_ply.py \
@@ -355,9 +459,9 @@ python scripts/export/taiwan_zip_generated_to_ply.py \
 
 The exporter writes category-specific and combined point clouds using the documented Rhino coordinate convention.
 
-### 11. Verify reproducibility
+### 12. Verify reproducibility
 
-For a comparable run, record and preserve:
+For a comparable run, preserve:
 
 - dataset summary and manifest
 - checkpoint epoch and validation loss
@@ -367,20 +471,37 @@ For a comparable run, record and preserve:
 - rendering parameters
 - generated JSON manifests
 
-The reference configuration uses seed `42`, seven input/output channels, a spatial latent shape of `16 × 16 × 16`, and 16 presentation states. Exact pixel output can still vary with PyTorch, CUDA, driver, and FFmpeg versions.
+The reference configuration uses:
 
-### Common problems
+```text
+seed = 42
+channels = 7
+input size = 256 × 256
+latent shape = 16 × 16 × 16
+presentation states = 16
+```
+
+Exact pixel output can still vary with PyTorch, CUDA, driver, and FFmpeg versions.
+
+## Common problems
 
 | Problem | Check |
 |---|---|
-| CUDA out of memory | reduce training batch size; do not keep parser models and the VAE loaded together |
-| Hugging Face connection error | confirm required models exist in local cache; then use offline environment flags |
+| CUDA out of memory | reduce training batch size; do not keep parser models and the VAE loaded simultaneously |
+| Hugging Face connection error | confirm required models exist in local cache; use offline environment flags when appropriate |
 | `ffmpeg` not found | install FFmpeg and add it to `PATH` |
 | checkpoint key mismatch | use the Spatial VAE V2 checkpoint with the V2 renderer, not the legacy global VAE |
-| `regression.npz not found` | confirm the supplied ZIP is the Spatial V2 bundle produced in step 5 |
+| `regression.npz not found` | confirm the supplied ZIP is the Spatial V2 bundle |
 | final renderer cannot find local files | verify `rgb.jpg`, `street46.ply`, and `street46_depth_official.png` are together in `--dataset-dir` |
+| CPU rendering is slow | use the V6.4 `--grid-only` workflow to avoid rerendering the full movie |
 
 ## Final model entry points
+
+Dataset builder:
+
+```bash
+python scripts/dataset/build_taiwan_zip_spatial_v2.py --help
+```
 
 Training:
 
@@ -388,16 +509,22 @@ Training:
 python scripts/training/taiwan_zip_spatial_vae_v2.py --help
 ```
 
-Checkpoint-driven final journey renderer:
+Compact latent morph renderer:
+
+```bash
+python scripts/render/render_taiwan_zip_morph.py --help
+```
+
+Final 16-state journey renderer:
 
 ```bash
 python scripts/render/render_taiwan_zip_v6_3_model_fix.py --help
 ```
 
-Compact latent morph renderer:
+Final 4 × 4 overview / movie finalizer:
 
 ```bash
-python scripts/render/render_taiwan_zip_morph.py --help
+python scripts/render/render_taiwan_zip_v6_4_grid_cpu_patch.py --help
 ```
 
 Generated-state PLY export:
@@ -408,7 +535,7 @@ python scripts/export/taiwan_zip_generated_to_ply.py --help
 
 ## Data and checkpoints
 
-This GitHub folder is intentionally source-first. It does not include the 604-scene image dataset, generated NPZ arrays, point-cloud exports, downloaded foundation-model weights, or the trained Spatial VAE checkpoint.
+This repository is intentionally **source-first**. It does not include the 604-scene image dataset, generated NPZ arrays, point-cloud exports, downloaded foundation-model weights, or the trained Spatial VAE checkpoint.
 
 Expected external artifacts include:
 
@@ -417,17 +544,36 @@ Expected external artifacts include:
 - Depth Anything V2 checkpoint
 - local `dataset/scenes/` when running the complete pipeline
 
-Keep large artifacts in release storage, cloud drive, or another dataset/model registry rather than Git history.
+Keep large artifacts in GitHub Releases, Git LFS, Zenodo, Hugging Face, cloud storage, or another dataset/model registry rather than normal Git history.
 
 ## Technical conventions
 
 - Training channels: `depth_norm`, `facade`, `window`, `signboard`, `vegetation`, `person`, `vehicle`
-- Relative depth: `0 = farther`, `1 = nearer`; it is not metric depth
+- Relative depth: `0 = farther`, `1 = nearer`
+- Relative depth is **not metric depth**
 - Semantics are independent multi-label fields
+- RGB is an upstream observation source; the Spatial VAE does not generate RGB
+- Point clouds are pseudo-3D spatial representations
 - Rhino convention: `+X = image right`, `+Y = forward/depth`, `+Z = up`
 
 ## Image provenance
 
-Every image embedded in this README is an existing Taiwan.zip project output. The README uses the project’s recorded hero image, 16-state grid, and four diagrams rendered from local RGB, relative-depth, semantic-mask, generated-field, and point-cloud data. No new illustrative or externally sourced image was generated for this README.
+Every image embedded in this README is an existing Taiwan.zip project output. The README uses the project’s recorded hero image, 16-state grid, and diagrams rendered from local RGB, relative-depth, semantic-mask, generated-field, and point-cloud data.
 
-See [`docs/PLAYING_MODELS_CONTEXT.md`](docs/PLAYING_MODELS_CONTEXT.md) and [`GITHUB_INTEGRATION_REPORT.md`](GITHUB_INTEGRATION_REPORT.md) before reproducing the complete workflow.
+No externally sourced or newly generated decorative imagery is required for this README.
+
+See [`docs/PLAYING_MODELS_CONTEXT.md`](docs/PLAYING_MODELS_CONTEXT.md) and [`GITHUB_INTEGRATION_REPORT.md`](GITHUB_INTEGRATION_REPORT.md) for additional project context.
+
+## Citation
+
+If you reference this project in academic, architectural, or computational-design work, please cite the repository and the project authors:
+
+**Hsuan-Yao Huang, Chih-Ling Tsou. _Taiwan.zip_. Playing Models 2026. Institute of Architecture, National Yang Ming Chiao Tung University.**
+
+A machine-readable `CITATION.cff` file is recommended for the repository root.
+
+## License
+
+No open-source license is asserted by this README alone.
+
+Before redistributing or adapting the code, media, dataset, or model artifacts, consult the repository's `LICENSE` file when one is provided. Dataset and third-party model components may require separate licensing terms.
