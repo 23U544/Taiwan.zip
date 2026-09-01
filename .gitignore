@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Models and generated arrays
+*.pt
+*.pth
+*.ckpt
+*.npy
+*.npz
+*.ply
+*.pcd
+*.xyz
+
+# Datasets, outputs and caches
+dataset/scenes/
+checkpoints/
+results*/
+final_media/
+frames/
+runs/
+cache/
+.cache/
+
+# Video and archives
+*.mp4
+*.mov
+*.avi
+*.zip
+*.7z
+*.rar
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

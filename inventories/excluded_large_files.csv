@@ -1,0 +1,5 @@
+﻿source_path,size_bytes,reason_excluded
+D:\GIA\3rd Up\DepthAnything\Depth-Anything-V2\phase_2b_spatial_v2\taiwan_zip_spatial_v2_bundle.zip,67718680,Generated dataset bundle excluded by policy
+D:\GIA\3rd Up\DepthAnything\Depth-Anything-V2\dataset\scenes,6242711062,604-scene source/output dataset excluded by policy
+D:\GIA\3rd Up\DepthAnything\Depth-Anything-V2\taiwan_zip_generated,40115182,Generated arrays and point-cloud outputs excluded by policy
+D:\GIA\3rd Up\DepthAnything\Depth-Anything-V2\checkpoints\depth_anything_v2_vitb.pth,389961218,Downloaded model weight excluded by policy

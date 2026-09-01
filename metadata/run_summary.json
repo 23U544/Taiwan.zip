@@ -1,0 +1,64 @@
+{
+  "version": "taiwan-zip-spatial-vae-v1.1",
+  "best_epoch": 24,
+  "best_val": 1.135528415441513,
+  "epochs_completed": 32,
+  "runtime_seconds": 95.85941433906555,
+  "device": "cuda",
+  "latent_dim": 128,
+  "channels": [
+    "depth_norm",
+    "facade",
+    "window",
+    "signboard",
+    "vegetation",
+    "person",
+    "vehicle"
+  ],
+  "prototype_summary": {
+    "version": "taiwan-zip-prototype-v1",
+    "ready_scene_count": 79,
+    "sample_count": 316,
+    "views_per_scene": 4,
+    "image_size": 256,
+    "channels": [
+      "depth_norm",
+      "facade",
+      "window",
+      "signboard",
+      "vegetation",
+      "person",
+      "vehicle"
+    ],
+    "semantic_channels": [
+      "facade",
+      "window",
+      "signboard",
+      "vegetation",
+      "person",
+      "vehicle"
+    ],
+    "split_sample_counts": {
+      "train": 220,
+      "val": 32,
+      "test": 32,
+      "regression": 32
+    },
+    "split_scene_counts": {
+      "train": 55,
+      "val": 8,
+      "test": 8,
+      "regression": 8
+    },
+    "semantic_positive_fraction_train": {
+      "facade": 0.5522497296333313,
+      "window": 0.10294778645038605,
+      "signboard": 0.0973447635769844,
+      "vegetation": 0.03053838573396206,
+      "person": 0.0362834595143795,
+      "vehicle": 0.021721232682466507
+    },
+    "skipped": []
+  },
+  "checkpoint_strategy": "local-first"
+}

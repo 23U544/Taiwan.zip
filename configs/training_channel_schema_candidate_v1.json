@@ -1,0 +1,12 @@
+{
+  "schema_version": "playing-models-training-schema-candidate-v1.6a",
+  "status": "candidate_not_frozen",
+  "layout": "C,H,W",
+  "channels": ["depth_norm", "facade", "window", "signboard", "vegetation", "person", "vehicle"],
+  "channel_count": 7,
+  "depth_policy": "scene-relative normalized float32; 0 farther, 1 nearer",
+  "semantic_policy": "binary source masks loaded as float32 with class-level weights from TRAINING_CHANNEL_POLICY_V1.json",
+  "excluded_canonical_channels_are_retained": true,
+  "pixel_level_confidence": null,
+  "reason": "Conservative schema after 49-scene audit; excludes channels with catastrophic oversized proposals until human review or a future parser version."
+}

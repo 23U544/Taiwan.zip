@@ -1,0 +1,293 @@
+{
+  "sources": [
+    "D:\\GIA\\TaiwanZip_GitHub_Local_Pack",
+    "D:\\GIA\\FINAL_GITHUB_COLAB_PACK-20260901T084331Z-1-001\\FINAL_GITHUB_COLAB_PACK"
+  ],
+  "target": "D:\\GIA\\Taiwan.zip",
+  "copied": [
+    {
+      "source": "local_pack",
+      "path": "configs\\spatial_v2_dataset_summary.json",
+      "size": 1094
+    },
+    {
+      "source": "local_pack",
+      "path": "configs\\TRAINING_CHANNEL_POLICY_V1.json",
+      "size": 4477
+    },
+    {
+      "source": "local_pack",
+      "path": "configs\\training_channel_schema_candidate_v1.json",
+      "size": 696
+    },
+    {
+      "source": "local_pack",
+      "path": "docs\\BULK_PROCESSING_SHARD_PLAN.md",
+      "size": 2625
+    },
+    {
+      "source": "local_pack",
+      "path": "docs\\COLAB_DATA_INTERFACE.md",
+      "size": 2374
+    },
+    {
+      "source": "local_pack",
+      "path": "docs\\CORPUS_DIVERSITY_REPORT.md",
+      "size": 1591
+    },
+    {
+      "source": "local_pack",
+      "path": "docs\\CORPUS_INVENTORY_REPORT.md",
+      "size": 561
+    },
+    {
+      "source": "local_pack",
+      "path": "docs\\LOCAL_SOURCE_NOTES.md",
+      "size": 1284
+    },
+    {
+      "source": "local_pack",
+      "path": "docs\\PHASE_1_5_COMPLETION_REPORT.md",
+      "size": 8658
+    },
+    {
+      "source": "local_pack",
+      "path": "docs\\PHASE_1_6A_COMPLETION_REPORT.md",
+      "size": 7040
+    },
+    {
+      "source": "local_pack",
+      "path": "docs\\PLAYING_MODELS_CONTEXT.md",
+      "size": 32062
+    },
+    {
+      "source": "local_pack",
+      "path": "docs\\SEMANTIC_QUALITY_AUDIT_REPORT.md",
+      "size": 5927
+    },
+    {
+      "source": "local_pack",
+      "path": "docs\\SEMANTIC_RECOGNITION_COMPLETION_REPORT.md",
+      "size": 10392
+    },
+    {
+      "source": "local_pack",
+      "path": "inventories\\excluded_large_files.csv",
+      "size": 596
+    },
+    {
+      "source": "local_pack",
+      "path": "inventories\\python_imports.txt",
+      "size": 3658
+    },
+    {
+      "source": "local_pack",
+      "path": "inventories\\selected_files.csv",
+      "size": 8564
+    },
+    {
+      "source": "local_pack",
+      "path": "LOCAL_PACKAGE_REPORT.md",
+      "size": 3498
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\corpus\\analyze_corpus.py",
+      "size": 7500
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\corpus\\core_channel_qa.py",
+      "size": 9588
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\corpus\\corpus_core.py",
+      "size": 12631
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\corpus\\corpus_ingest.py",
+      "size": 3112
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\corpus\\corpus_pipeline.py",
+      "size": 3639
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\corpus\\curation\\reclassify_taiwan_streetscape_v2_1.py",
+      "size": 12991
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\corpus\\curation\\review_streetscape_corpus.py",
+      "size": 17945
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\corpus\\curation\\screen_taiwan_streetscape_candidates_v2.py",
+      "size": 21938
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\corpus\\curation\\taiwan_streetscape_finder_v2_2.py",
+      "size": 49954
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\dataset\\build_taiwan_zip_spatial_v2.py",
+      "size": 11215
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\dataset\\validate_training_export.py",
+      "size": 1086
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\build_dataset.py",
+      "size": 16083
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\corpus_depth.py",
+      "size": 4651
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\depth_anything_v2\\dinov2.py",
+      "size": 15593
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\depth_anything_v2\\dinov2_layers\\__init__.py",
+      "size": 393
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\depth_anything_v2\\dinov2_layers\\attention.py",
+      "size": 2425
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\depth_anything_v2\\dinov2_layers\\block.py",
+      "size": 9584
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\depth_anything_v2\\dinov2_layers\\drop_path.py",
+      "size": 1195
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\depth_anything_v2\\dinov2_layers\\layer_scale.py",
+      "size": 851
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\depth_anything_v2\\dinov2_layers\\mlp.py",
+      "size": 1313
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\depth_anything_v2\\dinov2_layers\\patch_embed.py",
+      "size": 2921
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\depth_anything_v2\\dinov2_layers\\swiglu_ffn.py",
+      "size": 1922
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\depth_anything_v2\\dpt.py",
+      "size": 7612
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\depth_anything_v2\\util\\blocks.py",
+      "size": 4135
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\depth_anything_v2\\util\\transform.py",
+      "size": 6232
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\depth\\img2pointclouds.py",
+      "size": 24437
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\export\\render_taiwan_zip_v6_3_final.py",
+      "size": 37817
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\export\\taiwan_zip_generated_to_ply.py",
+      "size": 11077
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\parsing\\street_parser_v1.py",
+      "size": 27658
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\training\\taiwan_zip_colab_train.py",
+      "size": 12304
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\utilities\\clean_scene_outputs.py",
+      "size": 5638
+    },
+    {
+      "source": "local_pack",
+      "path": "scripts\\utilities\\validate_scene.py",
+      "size": 926
+    },
+    {
+      "source": "colab_pack",
+      "path": "media\\final_16state_grid.png",
+      "size": 1543086
+    },
+    {
+      "source": "colab_pack",
+      "path": "media\\hero_main_visual.png",
+      "size": 343730
+    },
+    {
+      "source": "colab_pack",
+      "path": "metadata\\run_summary.json",
+      "size": 1353
+    },
+    {
+      "source": "colab_pack",
+      "path": "notebooks\\Present.ipynb",
+      "size": 130407
+    },
+    {
+      "source": "colab_pack",
+      "path": "scripts\\render\\render_taiwan_zip_morph.py",
+      "size": 14801
+    },
+    {
+      "source": "colab_pack",
+      "path": "scripts\\render\\render_taiwan_zip_v6_3_model_fix.py",
+      "size": 30257
+    },
+    {
+      "source": "colab_pack",
+      "path": "scripts\\training\\taiwan_zip_spatial_vae_v2.py",
+      "size": 24321
+    }
+  ],
+  "conflicts": [],
+  "python_files": 35,
+  "blocked_files": [],
+  "over_95mb": []
+}

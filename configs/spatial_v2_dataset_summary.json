@@ -1,0 +1,55 @@
+{
+  "version": "taiwan-zip-spatial-v2-dataset",
+  "frozen_scene_range": {
+    "scene_start": 1,
+    "scene_end": 357
+  },
+  "ready_scene_count": 357,
+  "sample_count": 1071,
+  "views_per_scene": 3,
+  "views": [
+    "center",
+    "lead",
+    "trail"
+  ],
+  "image_size": 256,
+  "channels": [
+    "depth_norm",
+    "facade",
+    "window",
+    "signboard",
+    "vegetation",
+    "person",
+    "vehicle"
+  ],
+  "semantic_channels": [
+    "facade",
+    "window",
+    "signboard",
+    "vegetation",
+    "person",
+    "vehicle"
+  ],
+  "split_sample_counts": {
+    "train": 750,
+    "val": 108,
+    "test": 108,
+    "regression": 105
+  },
+  "split_scene_counts": {
+    "train": 250,
+    "val": 36,
+    "test": 36,
+    "regression": 35
+  },
+  "semantic_positive_fraction_train": {
+    "facade": 0.49807649850845337,
+    "window": 0.0804613009095192,
+    "signboard": 0.08897171914577484,
+    "vegetation": 0.05639699473977089,
+    "person": 0.04336944594979286,
+    "vehicle": 0.05146421119570732
+  },
+  "skipped_count": 0,
+  "skipped_preview": []
+}

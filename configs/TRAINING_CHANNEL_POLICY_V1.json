@@ -1,0 +1,27 @@
+{
+  "policy_version": "playing-models-training-channel-policy-v1",
+  "parser_version": "playing-models-street-parser-v1.0",
+  "basis": "49-scene heuristic audit without human ground truth",
+  "warning": "Training role and weight are not detector accuracy estimates.",
+  "confidence_policy": "Class-level weights only; Parser V1 has no reliable pixel-level confidence field.",
+  "channels": {
+    "facade": {"parser_reliability":"HIGH","training_role":"CORE","suggested_loss_weight":0.6,"include_in_v1_training":true,"reason":"Dense context is spatially useful, but 5% of scenes reach full-image coverage."},
+    "window": {"parser_reliability":"MEDIUM","training_role":"AUXILIARY","suggested_loss_weight":0.6,"include_in_v1_training":true,"reason":"High occurrence and bounded instance masks, with visible sign/opening confusion and high-coverage outliers."},
+    "door": {"parser_reliability":"MEDIUM","training_role":"EXCLUDE_V1","suggested_loss_weight":0.0,"include_in_v1_training":false,"reason":"Median scene coverage 37.8%; p95 96.5%; oversized whole-building DINO boxes."},
+    "balcony": {"parser_reliability":"MEDIUM","training_role":"EXCLUDE_V1","suggested_loss_weight":0.0,"include_in_v1_training":false,"reason":"Median coverage 45.1%; p95 96.4%; severe awning/railing confusion."},
+    "railing": {"parser_reliability":"MEDIUM","training_role":"LOW_WEIGHT","suggested_loss_weight":0.2,"include_in_v1_training":false,"reason":"Localized cases exist, but p95 coverage 57.1% and strong grille/balcony overlap."},
+    "grille": {"parser_reliability":"EXPERIMENTAL","training_role":"EXCLUDE_V1","suggested_loss_weight":0.0,"include_in_v1_training":false,"reason":"Fine structure unresolved; p95 scene coverage 66.7%."},
+    "awning": {"parser_reliability":"MEDIUM","training_role":"EXCLUDE_V1","suggested_loss_weight":0.0,"include_in_v1_training":false,"reason":"Median coverage 35.0%; p95 96.1%; oversized sign/facade proposals and storefront confusion."},
+    "storefront": {"parser_reliability":"MEDIUM","training_role":"EXCLUDE_V1","suggested_loss_weight":0.0,"include_in_v1_training":false,"reason":"Median coverage 40.0%; p95 96.2%; 95.6% overlap-over-smaller with door."},
+    "rolling_shutter": {"parser_reliability":"MEDIUM","training_role":"LOW_WEIGHT","suggested_loss_weight":0.2,"include_in_v1_training":false,"reason":"Some good localized masks, but p95 coverage 69.7% and broad opening confusion."},
+    "signboard": {"parser_reliability":"HIGH","training_role":"AUXILIARY","suggested_loss_weight":0.5,"include_in_v1_training":true,"reason":"Many visually valid signs; rare catastrophic facade/grille outliers remain."},
+    "air_conditioner": {"parser_reliability":"HIGH","training_role":"EXCLUDE_V1","suggested_loss_weight":0.0,"include_in_v1_training":false,"reason":"Small instances are often good, but p95 scene coverage 91.0% exposes catastrophic full-scene false proposals."},
+    "utility_pole": {"parser_reliability":"MEDIUM","training_role":"LOW_WEIGHT","suggested_loss_weight":0.2,"include_in_v1_training":false,"reason":"Mostly sparse, but maximum scene coverage 70.3% needs human review."},
+    "wire": {"parser_reliability":"EXPERIMENTAL","training_role":"EXCLUDE_V1","suggested_loss_weight":0.0,"include_in_v1_training":false,"reason":"Line heuristic responds to non-wire edges and has no instances/confidence."},
+    "vegetation": {"parser_reliability":"HIGH","training_role":"AUXILIARY","suggested_loss_weight":0.7,"include_in_v1_training":true,"reason":"Dense SegFormer context is bounded but sparse in this corpus; small plants remain inconsistent."},
+    "person": {"parser_reliability":"HIGH","training_role":"AUXILIARY","suggested_loss_weight":0.4,"include_in_v1_training":true,"reason":"Most masks are small; one catastrophic 86.2% scene outlier requires review."},
+    "vehicle": {"parser_reliability":"HIGH","training_role":"CORE","suggested_loss_weight":0.9,"include_in_v1_training":true,"reason":"Best-bounded instance class: p95 scene coverage 10.7%, maximum 13.0%, visually coherent masks."},
+    "street_object": {"parser_reliability":"MEDIUM","training_role":"EXCLUDE_V1","suggested_loss_weight":0.0,"include_in_v1_training":false,"reason":"Deliberately broad class with p95 scene coverage 58.6% and catastrophic outliers."},
+    "arcade_candidate": {"parser_reliability":"EXPERIMENTAL","training_role":"EXCLUDE_V1","suggested_loss_weight":0.0,"include_in_v1_training":false,"reason":"Explicitly empty in Parser V1."}
+  }
+}

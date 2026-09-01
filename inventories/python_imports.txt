@@ -1,0 +1,32 @@
+scripts\depth\img2pointclouds.py: argparse, cv2, depth_anything_v2.dpt, json, numpy, pathlib, torch
+scripts\depth\build_dataset.py: argparse, csv, cv2, depth_anything_v2.dpt, json, numpy, pathlib, shutil, torch
+scripts\depth\corpus_depth.py: argparse, corpus_core, cv2, depth_anything_v2.dpt, gc, json, numpy, pathlib, time, torch
+scripts\parsing\street_parser_v1.py: PIL, __future__, argparse, collections, cv2, gc, json, math, numpy, pathlib, re, torch, torch.nn.functional, transformers
+scripts\corpus\corpus_core.py: PIL, __future__, csv, cv2, datetime, hashlib, json, numpy, pathlib
+scripts\corpus\corpus_ingest.py: PIL, argparse, corpus_core, json, pathlib
+scripts\corpus\corpus_pipeline.py: argparse, corpus_core, json, os, pathlib, subprocess, sys, time
+scripts\corpus\analyze_corpus.py: argparse, collections, corpus_core, csv, json, numpy, pathlib
+scripts\corpus\core_channel_qa.py: PIL, __future__, argparse, collections, corpus_core, csv, cv2, json, math, numpy, os, pathlib
+scripts\dataset\build_taiwan_zip_spatial_v2.py: PIL, __future__, argparse, csv, json, numpy, pathlib, random, zipfile
+scripts\dataset\validate_training_export.py: argparse, csv, json, numpy, pathlib
+scripts\training\taiwan_zip_colab_train.py: __future__, argparse, json, math, matplotlib.pyplot, numpy, pathlib, random, shutil, time, torch, torch.nn, torch.nn.functional, torch.utils.data, zipfile
+scripts\export\taiwan_zip_generated_to_ply.py: __future__, argparse, json, numpy, pathlib
+scripts\export\render_taiwan_zip_v6_3_final.py: PIL, argparse, imageio.v2, io, json, math, numpy, os, pathlib, plyfile, random, tqdm, zipfile
+scripts\corpus\curation\taiwan_streetscape_finder_v2_2.py: PIL, __future__, argparse, collections, csv, dataclasses, gc, hashlib, html, io, json, math, os, pathlib, re, requests, sys, time, torch, transformers, typing, urllib.parse
+scripts\corpus\curation\screen_taiwan_streetscape_candidates_v2.py: PIL, __future__, argparse, contextlib, gc, json, math, numpy, pandas, pathlib, time, torch, transformers
+scripts\corpus\curation\reclassify_taiwan_streetscape_v2_1.py: PIL, __future__, argparse, json, math, numpy, pandas, pathlib
+scripts\corpus\curation\review_streetscape_corpus.py: __future__, argparse, collections, csv, datetime, http.server, json, os, pathlib, threading, urllib.parse, webbrowser
+scripts\utilities\clean_scene_outputs.py: argparse, fnmatch, pathlib, shutil
+scripts\utilities\validate_scene.py: argparse, corpus_core, json, pathlib
+scripts\depth\depth_anything_v2\dinov2.py: .dinov2_layers, functools, logging, math, torch, torch.nn, torch.nn.init, torch.utils.checkpoint, typing
+scripts\depth\depth_anything_v2\dinov2_layers\__init__.py: .attention, .block, .mlp, .patch_embed, .swiglu_ffn
+scripts\depth\depth_anything_v2\dinov2_layers\attention.py: logging, torch, xformers.ops
+scripts\depth\depth_anything_v2\dinov2_layers\block.py: .attention, .drop_path, .layer_scale, .mlp, logging, torch, typing, xformers.ops
+scripts\depth\depth_anything_v2\dinov2_layers\drop_path.py: torch
+scripts\depth\depth_anything_v2\dinov2_layers\layer_scale.py: torch, typing
+scripts\depth\depth_anything_v2\dinov2_layers\mlp.py: torch, typing
+scripts\depth\depth_anything_v2\dinov2_layers\patch_embed.py: torch, torch.nn, typing
+scripts\depth\depth_anything_v2\dinov2_layers\swiglu_ffn.py: torch, torch.nn.functional, typing, xformers.ops
+scripts\depth\depth_anything_v2\dpt.py: .dinov2, .util.blocks, .util.transform, cv2, torch, torch.nn, torch.nn.functional, torchvision.transforms
+scripts\depth\depth_anything_v2\util\blocks.py: torch.nn
+scripts\depth\depth_anything_v2\util\transform.py: cv2, numpy
